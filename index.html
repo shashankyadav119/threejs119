@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Jajal Medical Assignment</title>
+    <style>
+        body {
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <script src="js/three.js"></script>
+    <script src="./STLLoader.js"></script>
+    <script src="./OrbitControls.js"></script>
+
+    <script>
+        var mesh = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), new THREE.MeshNormalMaterial())
+        const scene = new THREE.Scene();
+        const camera1 = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 10000);
+        const renderer = new THREE.WebGLRenderer({ alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+        var hlight = new THREE.PointLight(0xffffff, 5);
+        var hlight2 = new THREE.PointLight(0xffffff, 5);
+        var hlight3 = new THREE.PointLight(0xffffff, 5);
+        var hlight4 = new THREE.PointLight(0xffffff, 5);
+        var hlight5 = new THREE.PointLight(0xffffff, 5);
+        var hlight6 = new THREE.PointLight(0xffffff, 5);
+        var controls = new THREE.OrbitControls(camera1, renderer.domElement);
+        var axhelper = new THREE.AxesHelper(200);
+        hlight.position.set(100, 00, 0)
+        hlight2.position.set(-100, 00, 00)
+        hlight3.position.set(00, 100, 00)
+        hlight4.position.set(00, -100, 00)
+        hlight5.position.set(00, 00, -100)
+        hlight6.position.set(00, 00, 100)
+        camera1.position.set(20, 200, 200)
+        scene.add(hlight)
+        scene.add(hlight2)
+        scene.add(hlight3)
+        scene.add(hlight4)
+        scene.add(hlight5)
+        scene.add(hlight6)
+
+        let loader = new THREE.STLLoader();
+        loader.load('bkp_Shoulder_Bone.stl', function (geometry) {
+            mesh = new THREE.Mesh(geometry, new THREE.MeshStandardMaterial({ color: 0x0f0f0f }));
+            scene.add(mesh);
+        }, undefined, function (error) {
+            console.error(error)
+        });
+
+
+        function animate() {
+            requestAnimationFrame(animate);
+            mesh.rotation.x += 0.02;
+            mesh.rotation.y += 0.02;
+            controls.update();
+            renderer.render(scene, camera1);
+        }
+        animate();
+    </script>
+</body>
+
+</html>
